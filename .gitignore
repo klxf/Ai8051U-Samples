@@ -1,0 +1,6 @@
+/*/*.uvgui*
+/*/Listings
+/.*/*
+
+/*/Objects/*
+!/*/Objects/*.hex
