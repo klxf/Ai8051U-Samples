@@ -20,3 +20,5 @@
    - 外部中断 0（P3.2）下降沿触发，在 LED1~LED4 显示计数
 
 ## 开源许可
+
+本项目使用 [MIT License](https://choosealicense.com/licenses/mit/) 开源许可协议
