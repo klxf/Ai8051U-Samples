@@ -24,6 +24,10 @@
    
    - 使用定时器 T0 计时 1s，每 1s 翻转一次 P0 口
 
+- SP.1. 神经网络
+  
+   - 使用神经网络识别手写数字
+
 ## 开源许可
 
 本项目使用 [MIT License](https://choosealicense.com/licenses/mit/) 开源许可协议
