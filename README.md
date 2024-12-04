@@ -32,6 +32,10 @@
   
    - 使用神经网络识别手写数字
 
+- SP.2. 井字棋AI
+
+   - 零和博弈中的极小化极大算法
+
 ## 开源许可
 
 本项目使用 [MIT License](https://choosealicense.com/licenses/mit/) 开源许可协议
