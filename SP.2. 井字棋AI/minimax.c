@@ -81,9 +81,12 @@ int minimax(char board[BOARD_SIZE][BOARD_SIZE], int depth, int is_maximizing, in
 					if (alpha >= beta) break;
 				}
 			}
+			if (alpha >= beta) break;
 		}
 		return best_score;
-	} else {
+	}
+	else
+	{
 		best_score = INFINITY;
 		for (i = 0; i < BOARD_SIZE; i++)
 		{
