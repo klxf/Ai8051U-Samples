@@ -55,7 +55,7 @@ unsigned char is_valid_move(unsigned char board[BOARD_SIZE][BOARD_SIZE], unsigne
 }
 
 // 极小化极大算法
-int minimax(char board[BOARD_SIZE][BOARD_SIZE], int depth, int is_maximizing) reentrant
+int minimax(char board[BOARD_SIZE][BOARD_SIZE], int depth, int is_maximizing, int alpha, int beta) reentrant
 {
 	int i, j, score, best_score;
 	unsigned char new_board[BOARD_SIZE][BOARD_SIZE];
@@ -65,7 +65,7 @@ int minimax(char board[BOARD_SIZE][BOARD_SIZE], int depth, int is_maximizing) re
 
 	if (is_maximizing)
 	{
-		best_score = -1;
+		best_score = -INFINITY;
 		for (i = 0; i < BOARD_SIZE; i++)
 		{
 			for (j = 0; j < BOARD_SIZE; j++)
@@ -74,15 +74,17 @@ int minimax(char board[BOARD_SIZE][BOARD_SIZE], int depth, int is_maximizing) re
 				{
 					board[i][j] = 'O';
 					copy_board(board, new_board);
-					score = minimax(new_board, depth + 1, 0);
+					score = minimax(new_board, depth + 1, 0, alpha, beta);
 					board[i][j] = ' ';
 					best_score = (score > best_score) ? score : best_score;
+					if (score > alpha) alpha = score;
+					if (alpha >= beta) break;
 				}
 			}
 		}
 		return best_score;
 	} else {
-		best_score = 1;
+		best_score = INFINITY;
 		for (i = 0; i < BOARD_SIZE; i++)
 		{
 			for (j = 0; j < BOARD_SIZE; j++)
@@ -91,11 +93,14 @@ int minimax(char board[BOARD_SIZE][BOARD_SIZE], int depth, int is_maximizing) re
 				{
 					board[i][j] = 'X';
 					copy_board(board, new_board);
-					score = minimax(new_board, depth + 1, 1);
+					score = minimax(new_board, depth + 1, 1, alpha, beta);
 					board[i][j] = ' ';
 					best_score = (score < best_score) ? score : best_score;
+					if (score < beta) beta = score;
+					if (alpha >= beta) break;
 				}
 			}
+			if (alpha >= beta) break;
 		}
 		return best_score;
 	}
@@ -103,9 +108,11 @@ int minimax(char board[BOARD_SIZE][BOARD_SIZE], int depth, int is_maximizing) re
 
 // 寻找最优移动
 int find_best_move(char board[BOARD_SIZE][BOARD_SIZE]) {
-	int best_score = -1;
+	int best_score = -INFINITY;
 	int best_move, score;
 	int i, j;
+	int alpha = -INFINITY;
+	int beta = INFINITY;
 	for (i = 0; i < BOARD_SIZE; i++)
 	{
 		for (j = 0; j < BOARD_SIZE; j++)
@@ -113,12 +120,13 @@ int find_best_move(char board[BOARD_SIZE][BOARD_SIZE]) {
 			if (board[i][j] == ' ')
 			{
 				board[i][j] = 'O';
-				score = minimax(board, 0, 0);
+				score = minimax(board, 0, 0, alpha, beta);
 				board[i][j] = ' ';
 				if (score > best_score)
 				{
 					best_score = score;
 					best_move = i * 3 + j;
+					alpha = (best_score > alpha) ? best_score : alpha;
 				}
 			}
 		}
